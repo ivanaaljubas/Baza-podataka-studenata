@@ -1,2 +1,5 @@
-ivana ljubas dakovo 4
-ana novkovic sibenik 5
+Ivana Ljubas Dakovo 4.00
+Ana Novkovic Sibenik 5.00
+Petra Perkovic Garcin 4.00
+Karla Blazevic Vinkovci 5.00
+Ante Mestrovic Ivankovo 4.00
