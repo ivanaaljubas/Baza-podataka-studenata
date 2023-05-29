@@ -3,7 +3,7 @@
 
 #define MAX_STUDENTS 100
 
-typedef struct {
+typedef struct {            //3.
 	char ime[50];
 	char prezime[50];
 	char mjestoStanovanja[100];
@@ -18,3 +18,4 @@ void spremiStudente(Student* studenti, int brojStudenata, const char* nazivDatot
 void ucitajStudente(Student* studenti, int* brojStudenata, const char* nazivDatoteke);
 
 #endif
+

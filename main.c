@@ -11,7 +11,7 @@ int main() {
 	int izbor;
 	char prezime[50];
 
-	while (1) {
+	while (1) {                                    //8.
 		printf("-----------\n");
 		printf("Izbornik:\n");
 		printf("1 - Unos novog studenta\n");

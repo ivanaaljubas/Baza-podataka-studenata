@@ -3,31 +3,31 @@
 #include <stdio.h>
 #include <string.h>
 
-void unosStudenta(Student* studenti, int* brojStudenata) {
-		if (*brojStudenata >= MAX_STUDENTS) {
-			printf("Dostignut je maksimalan broj studenata.\n");
-			return;
-		}
-
-		Student noviStudent;
-
-		printf("Unesite ime: ");
-		scanf("%s", noviStudent.ime);
-
-		printf("Unesite prezime: ");
-		scanf("%s", noviStudent.prezime);
-
-		printf("Unesite mjesto stanovanja: ");
-		scanf("%s", noviStudent.mjestoStanovanja);
-
-		printf("Unesite prosjek: ");
-		scanf("%f", &noviStudent.prosjek);
-
-		studenti[*brojStudenata] = noviStudent;
-		(*brojStudenata)++;
-
-		printf("Student je uspjesno dodan.\n");
+void unosStudenta(Student* studenti, int* brojStudenata) {      //4.
+	if (*brojStudenata >= MAX_STUDENTS) {
+		printf("Dostignut je maksimalan broj studenata.\n");
+		return;
 	}
+
+	Student noviStudent;
+
+	printf("Unesite ime: ");
+	scanf("%s", noviStudent.ime);
+
+	printf("Unesite prezime: ");
+	scanf("%s", noviStudent.prezime);
+
+	printf("Unesite mjesto stanovanja: ");
+	scanf("%s", noviStudent.mjestoStanovanja);
+
+	printf("Unesite prosjek: ");
+	scanf("%f", &noviStudent.prosjek);
+
+	studenti[*brojStudenata] = noviStudent;
+	(*brojStudenata)++;
+
+	printf("Student je uspjesno dodan.\n");
+}
 
 void ispisSvihStudenata(Student* studenti, int brojStudenata) {
 	if (brojStudenata == 0) {
@@ -114,3 +114,4 @@ void ucitajStudente(Student* studenti, int* brojStudenata, const char* nazivDato
 	fclose(datoteka);
 	printf("Studenti su uspjesno ucitani iz datoteke '%s'.\n", nazivDatoteke);
 }
+
