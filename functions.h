@@ -1,7 +1,7 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-typedef struct igrac {
+typedef struct student {
 	int id;
 	char ime[25];
 	char prezime[30];
