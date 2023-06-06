@@ -4,14 +4,14 @@
 #include <string.h>
 #include "functions.h"
 
-static int brojStudenata = 0, i, j, br = 0;
+static int brojStudenata = 0, i, j, br = 0;  //5.
 
 int izbornik() {
 
 	int opcija = 0;
-	static STUDENT* polje = NULL;
+	static STUDENT* polje = NULL;       //9.
 
-	printf("Dobrodosli u aplikaciju!\nOdabirom jednih od opcija uredite, dodajte ili saznajte vise studentima FERIT-a.\n");
+	printf("Dobrodosli u aplikaciju!\nOdabirom jednih od opcija uredite, dodajte ili saznajte vise studentima FERIT-a.\n");    //8.
 	printf("Pritiskom na redni broj opcije odaberite istu.\n");
 	printf("' 1 ' Dodaj studenta\n");
 	printf("' 2 ' Uredi postojeceg studenta\n");
@@ -22,6 +22,7 @@ int izbornik() {
 	printf("' 7 ' Izlaz iz programa\n");
 
 	scanf("%d", &opcija);
+
 	system("cls");
 
 	switch (opcija) {
@@ -63,9 +64,12 @@ int izbornik() {
 		return 99;
 		break;
 	default:
+
 		printf("\nOdabrali ste pogresan broj!\nMolim probajte ponovno.\n");
 	}
 	return opcija;
+
+	
 }
 
 izbornikSrch() {
@@ -96,8 +100,12 @@ izbornikSrch() {
 		SearchOcjena(polje);
 		break;
 	case 5:
-		return 90;
-	default: printf("Odabrali ste pogresan broj!\nMolim probajte ponovno.\n");
+		return 89;
+		//break;
+	default:
+		printf("Odabrali ste pogresan broj!\nMolim probajte ponovno.\n"); //11.
+
+		
 	}
 	return opcija;
 }
@@ -130,7 +138,7 @@ int izbornikSrt() {
 
 void kreiranjeDat() {
 	FILE* fp = NULL;
-	fp = fopen("studenti.bin", "wb");
+	fp = fopen("studenti.bin", "wb");              //16.
 	if (fp == NULL) {
 		perror("Kreiranje");
 	}
@@ -145,11 +153,12 @@ void dodavanjeStudenata() {
 		perror("Dodavanje");
 
 	fread(&brojStudenata, sizeof(int), 1, fp);
-	printf("Trenutni broj studenata: %d", brojStudenata);
+	printf("Trenutni broj studenata: %d \n", brojStudenata);
 
 	STUDENT studenti;
 	studenti.id = brojStudenata;
 	br++;
+	
 	getchar();
 	printf("Unesite ime studenta: ");
 	scanf("%24[^\n]", studenti.ime);
@@ -163,7 +172,7 @@ void dodavanjeStudenata() {
 	printf("Unesite ocjenu studenta: ");
 	scanf_s("%f[^\n]", &studenti.ocjena);
 	getchar();
-	fseek(fp, sizeof(STUDENT) * brojStudenata, SEEK_CUR);
+	fseek(fp, sizeof(STUDENT) * brojStudenata, SEEK_CUR);         //17.
 	fwrite(&studenti, sizeof(STUDENT), 1, fp);
 	rewind(fp);
 	brojStudenata++;
@@ -211,7 +220,7 @@ void* ucitavanjeStudenata() {
 	}
 	fread(&brojStudenata, sizeof(int), 1, fp);
 	STUDENT* polje = NULL;
-	polje = (STUDENT*)calloc(brojStudenata, sizeof(STUDENT));
+	polje = (STUDENT*)calloc(brojStudenata, sizeof(STUDENT));      //13. 14.
 	if (polje == NULL) {
 		perror("Zauzimanje memorije");
 		return NULL;
@@ -227,7 +236,7 @@ void ispisivanje(STUDENT* polje) {
 	}
 }
 
-void* SearchIme(STUDENT* polje) {
+void* SearchIme(STUDENT* polje) {      //20.
 	char reqName[25];
 	int br = 0;
 
@@ -315,7 +324,7 @@ void zamjena2(STUDENT* manji, STUDENT* veci) {
 	*veci = temp;
 }
 
-void selectionSortOcjeneUzl(STUDENT* polje) {
+void selectionSortOcjeneUzl(STUDENT* polje) {                //20.
 	for (int j = 0; j < brojStudenata; j++) {
 		for (int i = 0; i < brojStudenata - 1; i++) {
 			if (polje[i].ocjena > polje[i + 1].ocjena) {
@@ -347,10 +356,10 @@ void brisanjeStudenata(STUDENT* polje) {
 	FILE* fp = NULL;
 	fp = fopen("studenti.bin", "wb");
 	if (fp == NULL) {
-		perror("Brisanje studenata");
+		perror("Brisanje studenata");         //19.
 	}
 	rewind(fp);
-	fseek(fp, sizeof(int), SEEK_CUR);
+	fseek(fp, sizeof(int), SEEK_CUR);         //17.
 
 	int br = 0, reqstudenta;
 
@@ -375,9 +384,9 @@ void brisanjeBaze(STUDENT* polje) {
 	char uvjet[7] = { '\0' };
 	scanf("%6s", uvjet);
 	if (!strcmp("obrisi", uvjet)) {
-		remove("studenti.bin") == 0 ? printf("Izbrisali ste datoteku studenti.bin.\n") : printf("Datoteka neuspjesno izbrisani ili ona ne postoji.\n");
+		remove("studenti.bin") == 0 ? printf("Izbrisali ste datoteku studenti.bin.\n") : printf("Datoteka neuspjesno izbrisani ili ona ne postoji.\n"); //18.
 		printf("\nIzlaz iz programa.\n");
-		free(polje);
+		free(polje);         //15.
 	}
 	else printf("\nZadrzali ste datoteku.\nIzlaz iz programa\n");
 }
