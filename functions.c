@@ -4,14 +4,18 @@
 #include <string.h>
 #include "functions.h"
 
-static int brojStudenata = 0, i, j, br = 0;  //5.
+static int brojStudenata = 0, i, j, br = 0;
 
 int izbornik() {
 
-	int opcija = 0;
-	static STUDENT* polje = NULL;       //9.
+	int opcijaBroj;
+	char opcija[2]; 
+	int rezultat = 0;
+	static STUDENT* polje = NULL;
 
-	printf("Dobrodosli u aplikaciju!\nOdabirom jednih od opcija uredite, dodajte ili saznajte vise studentima FERIT-a.\n");    //8.
+	int priv_var = 0;
+
+	printf("Dobrodosli u aplikaciju!\nOdabirom jednih od opcija uredite, dodajte ili saznajte vise studentima FERIT-a.\n");
 	printf("Pritiskom na redni broj opcije odaberite istu.\n");
 	printf("' 1 ' Dodaj studenta\n");
 	printf("' 2 ' Uredi postojeceg studenta\n");
@@ -21,22 +25,35 @@ int izbornik() {
 	printf("' 6 ' Brisanje studenata\n");
 	printf("' 7 ' Izlaz iz programa\n");
 
-	scanf("%d", &opcija);
+	
+	do {
+		scanf("%s", opcija);
+		rezultat = strlen(opcija);
+		if (rezultat > 1) {
+			printf("Krivi unos");
+		}
 
+	} while (rezultat > 1);
+	opcija[2] = malloc(sizeof(2));
+	atoi(&opcijaBroj);
+
+
+
+	
 	system("cls");
 
-	switch (opcija) {
-	case 1:
+	switch (opcija[0]) {
+	case '1':
 		ucitavanjeStudenata();
 		if (brojStudenata == 0) {
 			kreiranjeDat();
 		}
 		dodavanjeStudenata();
 		break;
-	case 2:
+	case '2':
 		azuriranje();
 		break;
-	case 3:
+	case '3':
 		if (polje != NULL) {
 			free(polje);
 			polje = NULL;
@@ -44,31 +61,31 @@ int izbornik() {
 		polje = (STUDENT*)ucitavanjeStudenata();
 		ispisivanje(polje);
 		break;
-	case 4:
-		while (opcija != 90) {
-			opcija = izbornikSrch();
+	case '4':
+		while (opcijaBroj != 90) {
+			izbornikSrch();
 		}
 		break;
-	case 5:
-		while (opcija != 89)
-			opcija = izbornikSrt();
+	case '5':
+		while (opcijaBroj != 89)
+			 izbornikSrt();
 		break;
-	case 6:
+	case '6':
 		if (polje == NULL)
 			printf("Baza podataka prazna.");
 		else
 			brisanjeStudenata(polje);
 		break;
-	case 7:
+	case '7':
 		brisanjeBaze(polje);
 		return 99;
 		break;
 	default:
-
 		printf("\nOdabrali ste pogresan broj!\nMolim probajte ponovno.\n");
+		
+		break;
+		
 	}
-	return opcija;
-
 	
 }
 
@@ -100,12 +117,8 @@ izbornikSrch() {
 		SearchOcjena(polje);
 		break;
 	case 5:
-		return 89;
-		//break;
-	default:
-		printf("Odabrali ste pogresan broj!\nMolim probajte ponovno.\n"); //11.
-
-		
+		return 90;
+	default: printf("Odabrali ste pogresan broj!\nMolim probajte ponovno.\n");
 	}
 	return opcija;
 }
@@ -138,7 +151,7 @@ int izbornikSrt() {
 
 void kreiranjeDat() {
 	FILE* fp = NULL;
-	fp = fopen("studenti.bin", "wb");              //16.
+	fp = fopen("studenti.bin", "wb");
 	if (fp == NULL) {
 		perror("Kreiranje");
 	}
@@ -153,12 +166,11 @@ void dodavanjeStudenata() {
 		perror("Dodavanje");
 
 	fread(&brojStudenata, sizeof(int), 1, fp);
-	printf("Trenutni broj studenata: %d \n", brojStudenata);
+	printf("Trenutni broj studenata: %d", brojStudenata);
 
 	STUDENT studenti;
 	studenti.id = brojStudenata;
 	br++;
-	
 	getchar();
 	printf("Unesite ime studenta: ");
 	scanf("%24[^\n]", studenti.ime);
@@ -172,7 +184,7 @@ void dodavanjeStudenata() {
 	printf("Unesite ocjenu studenta: ");
 	scanf_s("%f[^\n]", &studenti.ocjena);
 	getchar();
-	fseek(fp, sizeof(STUDENT) * brojStudenata, SEEK_CUR);         //17.
+	fseek(fp, sizeof(STUDENT) * brojStudenata, SEEK_CUR);
 	fwrite(&studenti, sizeof(STUDENT), 1, fp);
 	rewind(fp);
 	brojStudenata++;
@@ -220,7 +232,7 @@ void* ucitavanjeStudenata() {
 	}
 	fread(&brojStudenata, sizeof(int), 1, fp);
 	STUDENT* polje = NULL;
-	polje = (STUDENT*)calloc(brojStudenata, sizeof(STUDENT));      //13. 14.
+	polje = (STUDENT*)calloc(brojStudenata, sizeof(STUDENT));
 	if (polje == NULL) {
 		perror("Zauzimanje memorije");
 		return NULL;
@@ -232,11 +244,11 @@ void* ucitavanjeStudenata() {
 
 void ispisivanje(STUDENT* polje) {
 	for (i = 0; i < brojStudenata; i++) {
-		printf("Ime:%s  Prezime:%s  Smjer:%s  Ocjena: %f\n", (polje + i)->ime, (polje + i)->prezime, (polje + i)->smjer, (polje + i)->ocjena);
+		printf("Ime: %s Prezime: %s  Smjer: %s  Ocjena: %f\n", (polje + i)->ime, (polje + i)->prezime, (polje + i)->smjer, (polje + i)->ocjena);
 	}
 }
 
-void* SearchIme(STUDENT* polje) {      //20.
+void* SearchIme(STUDENT* polje) {
 	char reqName[25];
 	int br = 0;
 
@@ -324,7 +336,7 @@ void zamjena2(STUDENT* manji, STUDENT* veci) {
 	*veci = temp;
 }
 
-void selectionSortOcjeneUzl(STUDENT* polje) {                //20.
+void selectionSortOcjeneUzl(STUDENT* polje) {
 	for (int j = 0; j < brojStudenata; j++) {
 		for (int i = 0; i < brojStudenata - 1; i++) {
 			if (polje[i].ocjena > polje[i + 1].ocjena) {
@@ -356,10 +368,10 @@ void brisanjeStudenata(STUDENT* polje) {
 	FILE* fp = NULL;
 	fp = fopen("studenti.bin", "wb");
 	if (fp == NULL) {
-		perror("Brisanje studenata");         //19.
+		perror("Brisanje studenata");
 	}
 	rewind(fp);
-	fseek(fp, sizeof(int), SEEK_CUR);         //17.
+	fseek(fp, sizeof(int), SEEK_CUR);
 
 	int br = 0, reqstudenta;
 
@@ -384,9 +396,9 @@ void brisanjeBaze(STUDENT* polje) {
 	char uvjet[7] = { '\0' };
 	scanf("%6s", uvjet);
 	if (!strcmp("obrisi", uvjet)) {
-		remove("studenti.bin") == 0 ? printf("Izbrisali ste datoteku studenti.bin.\n") : printf("Datoteka neuspjesno izbrisani ili ona ne postoji.\n"); //18.
+		remove("studenti.bin") == 0 ? printf("Izbrisali ste datoteku studenti.bin.\n") : printf("Datoteka neuspjesno izbrisani ili ona ne postoji.\n");
 		printf("\nIzlaz iz programa.\n");
-		free(polje);         //15.
+		free(polje);
 	}
 	else printf("\nZadrzali ste datoteku.\nIzlaz iz programa\n");
 }
