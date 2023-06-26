@@ -2,12 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "functions.h"
+#include "dataType.h"
 
-int main() {
-	int opcija = 1;
+int main(void) {
 
-	while (opcija != 99) {
-		opcija = izbornik();
-	}
-	return 0;
+    int uvjet = 1;
+
+    char* datoteka = "studenti.bin";
+
+    while (uvjet) {
+        uvjet = izbornik(datoteka);
+    }
+
+    printf("Kraj programa");
+
+    return 0;
 }
