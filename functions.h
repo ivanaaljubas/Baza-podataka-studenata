@@ -1,17 +1,32 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
-#include "dataType.h"
+typedef struct student {
+	int id;
+	char ime[25];
+	char prezime[30];
+	char smjer[30];
+	float ocjena;
+}STUDENT;
 
-int izbornik(const char* const);
-void kreiranjeDatoteke(const char* const);
-void dodajStudenta(const char* const);
-void* ucitajStudente(const char* const);
-void ispisiSveStudente(const STUDENT* const);
-STUDENT* pretraziStudente(STUDENT* const);
-void uredivanjeStudenata(STUDENT*, const char* const);
-void brisanjeStudenta(STUDENT* const, const char* const);
-void ispisPoGodinama(const STUDENT*);
-int izlazIzPrograma(STUDENT*);
+int izbornik();
+void izbornikSrch();
+int izbornikSrt();
+void kreiranjeDat();
+void dodavanjeStudenata();
+void azuriranje();
+void* ucitavanjeStudenata();
+void ispisivanje(STUDENT*);
+void* SearchIme(STUDENT*);
+void* SearchPrezime(STUDENT*);
+void* SearchSmjer(STUDENT*);
+void* SearchOcjena(STUDENT*);
+void zamjena(STUDENT*, STUDENT*);
+void zamjena2(STUDENT*, STUDENT*);
+void selectionSortOcjeneUzl(STUDENT*);
+void selectionSortOcjeneSil(STUDENT*);
+void brisanjeStudenata(STUDENT*);
+void brisanjeBaze(STUDENT*);
+void natrag();
 
-#endif
+#endif //FUNCTIONS_H
